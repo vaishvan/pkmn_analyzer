@@ -1,0 +1,267 @@
+/* src/components/PokemonAnalyzer/styles.module.css */
+@font-face {
+  font-family: "PKMN";
+  src: url("../assets/PokemonClassic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 64rem;
+}
+
+.cardHeader {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardContent {
+  padding: 1.5rem;
+}
+
+.button {
+  font-family: "PKMN";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.primaryButton {
+  background-color: #2361e5;
+  color: white;
+  border: none;
+}
+
+.primaryButton:hover:not(:disabled) {
+  background-color: #144eec;
+}
+
+.subtitle{
+  display: flex;
+  justify-content: center;
+}
+
+.outlineButton {
+  background-color: transparent;
+  border: 1px solid #e5e7eb;
+}
+
+.outlineButton:hover:not(:disabled) {
+  background-color: #f9fafb;
+}
+
+.iconButton {
+  background-color: #c23b3b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchDialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 90%;
+  max-width: 32rem;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.searchOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  margin-bottom: 1rem;
+}
+
+.searchResults {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.searchItem {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+}
+
+.searchItem:hover {
+  background-color: #f3f4f6;
+}
+
+.spinningIcon{
+  width: 3px;
+  margin-right: 10px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 10px solid;
+  border-color: #c23b3b #b4626200;
+  animation: l1 1s infinite;
+}
+@keyframes l1 {to{transform: rotate(.5turn)}}
+
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.container {
+    width: 100%;
+    max-width: 64rem;
+  }
+  
+  .pokemonSlot {
+    padding: 0.5rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .pokemonSlot:hover{
+    background-color: #4b9bea;
+  }
+
+  .pokemonSlot:hover .emptySlot{
+    color: #000000;
+  }
+  
+  .pokemonSprite {
+    width: 3rem;
+    height: 3rem;
+  }
+  
+  .pokemonName {
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+  
+  .pokemonTypes {
+    font-size: 0.875rem;
+    color: #6b7280;
+    text-transform: capitalize;
+  }
+  
+  .emptySlot{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+  }
+  
+  .searchIcon {
+    width: 1rem;
+    height: 1rem;
+  }
+  
+  .typeHeatmap {
+    margin-top: 1rem;
+  }
+  
+  .heatmapTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+  
+  .typeGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .typeGrid {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  
+  .typeCell {
+    padding: 0.5rem;
+    font-size: 0.75rem;
+    text-align: center;
+    border-radius: 0.25rem;
+    text-transform: capitalize;
+  }
+
+  .typeCell:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .anaysisSection{
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 64rem;
+  }
+
+  .analysisContent{
+
+    max-width: 100%;
+    word-wrap: break-word; 
+    overflow: auto;
+  }
+
+  .analysisTitle {
+    text-align: center;
+    padding-top: 5%;
+  }
+
+  .bannerContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -150px;
+    margin-bottom: 10px;
+  }
