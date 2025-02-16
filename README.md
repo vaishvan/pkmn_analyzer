@@ -1,8 +1,7 @@
-# React + Vite
+# POKEMON ANALYZER
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Pokémon Battle Optimizer is a web app that helps you strategize by analyzing your team and your opponent’s Pokémon. Simply enter both teams, and the app provides optimal battle insights, including type advantages, synergy, and counter strategies. It uses Google Gemini api as of now, but can be customized to fit any AI model to your liking!\
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Get your own api key (I've configured it to use google gemini as it's free for the time being) and place it in a .env file with the key name as described under aiService.js\
+Bugs are to be expected. Try to clean up the code as well. The UI Doesn't work well on Mobile devices or smaller screens.\
+Future commits are always welcome, and I hope this rudimentary project inspires you to build something too!\
