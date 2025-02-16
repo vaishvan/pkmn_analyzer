@@ -6,4 +6,7 @@ Get your own api key (I've configured it to use google gemini as it's free for t
 Bugs are to be expected. Try to clean up the code as well. The UI Doesn't work well on Mobile devices or smaller screens.\
 Future commits are always welcome, and I hope this rudimentary project inspires you to build something too!\
 
+Some of the screenshots of the app in action is given below:
+
+![alt text](https://github.com/vaishvan/pkmn_analyzer/blob/main/Screenshot 2025-02-16 152316.png?raw=true)
 
