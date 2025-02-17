@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss()
   ],
+  base: "/pkmn_analyzer",
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
