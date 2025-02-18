@@ -1,4 +1,3 @@
-// src/services/pokemonAPI.js
 export const fetchPokemonList = async () => {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1000');
     if (!response.ok) throw new Error('Failed to fetch Pokemon list');
