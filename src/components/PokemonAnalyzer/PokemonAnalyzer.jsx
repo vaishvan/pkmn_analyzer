@@ -1,4 +1,3 @@
-// src/components/PokemonAnalyzer/PokemonAnalyzer.jsx
 import React, { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { PokemonSlot } from './PokemonSlot';
