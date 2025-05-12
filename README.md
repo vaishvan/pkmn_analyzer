@@ -9,7 +9,7 @@
 Pokémon Analyzer is an advanced **Pokémon battle strategy tool** that helps players analyze their team and their opponent's lineup. By evaluating **type matchups, team synergy, strengths, and weaknesses**, this web app offers expert recommendations for an **optimal battle strategy** in competitive or casual gameplay.
 
 ## Installation & Setup
-### How to Install Pokémon Analyzer
+### How to Setup Pokémon Analyzer
 1. **Clone the repository:**
    ```sh
    git clone https://github.com/your-username/pokemon-analyzer.git
@@ -38,7 +38,6 @@ Pokémon Analyzer is an advanced **Pokémon battle strategy tool** that helps pl
 ![Image](https://github.com/user-attachments/assets/b4aac7d4-fd2b-4cec-b788-c1baaaf5e022)
 
 ## Known issues
-- The banner image does not align properly once the analysis is complete - primarily due to the fact that I've used margin attribute in CSS in absolute pixels instead of it being relative. \
 - The colors of each Pokemon Type is not being displayed correctly, but rather all are displayed as white as of now.\
 - Since this is a vanity project, I want it to run side by side with a local LLM, and as such, I'm trying to learn how to integrate it with Ollama
 
