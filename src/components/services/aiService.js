@@ -1,6 +1,20 @@
 export const generateAIAnalysis = async (yourTeamData, opponentTeamData) => {
-  const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
-  const API_KEY = import.meta.env.VITE_GOOGLE_GEMINI_API_KEY;
+    console.log('Deployment Environment:', import.meta.env.MODE);
+    console.log('API Key Present:', !!import.meta.env.VITE_GOOGLE_GEMINI_API_KEY);
+  
+    const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
+    
+    // Multiple fallback methods for API key
+    const API_KEY = 
+      import.meta.env.VITE_GOOGLE_GEMINI_API_KEY || 
+      process.env.VITE_GOOGLE_GEMINI_API_KEY || 
+      window.ENV?.VITE_GOOGLE_GEMINI_API_KEY;
+  
+    // Explicit error if no API key
+    if (!API_KEY) {
+      console.error('No API key found in any environment!');
+      throw new Error('Missing Google Gemini API Key. Please check your environment configuration.');
+    }
 
   try {
       const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
