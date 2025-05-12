@@ -1,4 +1,3 @@
-// src/components/PokemonAnalyzer/PokemonSlot.jsx
 import React from 'react';
 import { Search } from 'lucide-react';
 import styles from './styles.module.css';

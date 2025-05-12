@@ -1,5 +1,5 @@
 export const generateAIAnalysis = async (yourTeamData, opponentTeamData) => {
-  const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+  const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
   const API_KEY = import.meta.env.VITE_GOOGLE_GEMINI_API_KEY;
 
   try {
@@ -12,7 +12,10 @@ export const generateAIAnalysis = async (yourTeamData, opponentTeamData) => {
               contents: [{
                   role: 'user',
                   parts: [{
-                      text: `As a Pokémon battle expert, analyze these two teams, your response should be based on previous pokemon showdown data, and should account for the best level ranges. Your response should also include the optimal strategy on when to switch pokemon, and which pokemon to start with, everything should be given:
+                      text: `As a Pokémon battle expert, analyze these two teams, your response should be based on previous pokemon showdown data,
+                        and should account for the best level ranges. Remove all sorts of bold stuff and italics and headings. There should only be bullet points.
+                        Your response should also include the optimal strategy on when to switch pokemon, which moves to choose based on the level ranges
+                        and previous pokemon showdown data, what the best strategy for each pokemon is, everything that a user might need should be given:
                           My team: ${yourTeamData.map(p => p?.name || '').filter(Boolean).join(', ')}
                           My team types: ${yourTeamData.map(p => p?.types.join('/')).filter(Boolean).join(', ')}
                           My team abilities: ${yourTeamData.map(p => p?.abilities.join('/')).filter(Boolean).join(', ')}

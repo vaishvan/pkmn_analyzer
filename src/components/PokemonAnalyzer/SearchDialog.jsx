@@ -1,4 +1,3 @@
-// src/components/PokemonAnalyzer/SearchDialog.jsx
 import React from 'react';
 import styles from './styles.module.css';
 

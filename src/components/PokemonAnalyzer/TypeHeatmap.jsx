@@ -1,4 +1,3 @@
-// src/components/PokemonAnalyzer/TypeHeatmap.jsx
 import React from 'react';
 import { POKEMON_TYPES } from '../constants/Pokemontypes';
 import styles from './styles.module.css';

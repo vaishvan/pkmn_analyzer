@@ -1,4 +1,3 @@
-// src/components/PokemonAnalyzer/PokemonAnalyzer.jsx
 import React, { useState, useEffect } from 'react';
 import { X, Loader2 } from 'lucide-react';
 import { PokemonSlot } from './PokemonSlot';
@@ -8,6 +7,7 @@ import { fetchPokemonList, fetchPokemonData } from '../services/pokemonAPI';
 import { generateAIAnalysis } from '../services/aiService';
 import { calculateTypeAnalysis } from '../utils/typeAnalysis';
 import styles from './styles.module.css';
+import banner from "../assets/banner.png";
 
 const PokemonAnalyzer = () => {
   const [pokemonList, setPokemonList] = useState([]);
@@ -77,11 +77,7 @@ const PokemonAnalyzer = () => {
   return (
     <div className={styles.container}>
       <div className={styles.bannerContainer}>
-        <img 
-          src="src\components\assets\pngimg.com - pokemon_logo_PNG10 1.png"
-          alt="Pokemon Team Analyzer Banner"
-          className={styles.bannerImage}
-        />
+      <img src={banner} className={styles.bannerImage} />
       </div>
 
     <div className={styles.card}>

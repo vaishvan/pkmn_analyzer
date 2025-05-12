@@ -19,7 +19,7 @@ body {
   line-height: 1.6;
   color: #333;
   background-size: cover;
-  background-image: url("src/components/assets/Group 34562.png");
+  background-image: url("../src/components/assets/background.png");
   background-color: #df9e9e;
 }
 

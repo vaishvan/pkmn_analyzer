@@ -1,0 +1,40 @@
+name: DEPLOY PKMN_ANALYZER
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - deploy
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      VITE_API_KEY: ${{ secrets.VITE_API_KEY }}
+
+    steps:
+        #Checkout repository
+        -name: Checkout code
+        uses: actions/checkout@v3
+
+        #Setup Node.js
+        -name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+        #Install dependencies
+        -name: Install dependencies
+        run: npm install
+
+        #Build the project
+        -name: Build the project
+        run: npm run build
+
+        #Deploy to Github pages
+        -name: Deploy to Github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
