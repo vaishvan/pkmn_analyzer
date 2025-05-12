@@ -1,6 +1,6 @@
   // src/utils/typeAnalysis.js
 
-  import { POKEMON_TYPES } from "../constants/Pokemontypes";
+  import { POKEMON_TYPES } from '../constants/pokemonTypes'
   
   export const calculateTypeAnalysis = (teamData) => {
     const typeCounts = {};
