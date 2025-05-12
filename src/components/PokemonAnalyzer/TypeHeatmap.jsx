@@ -1,5 +1,5 @@
 import React from 'react';
-import { POKEMON_TYPES } from '../constants/Pokemontypes';
+import { POKEMON_TYPES } from '../constants/pokemonTypes';
 import styles from './styles.module.css';
 
 const TYPE_COLORS = {
