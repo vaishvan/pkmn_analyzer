@@ -10,9 +10,6 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
 
-    env:
-      VITE_GOOGLE_GEMINI_API_KEY: ${{ secrets.VITE_GOOGLE_GEMINI_API_KEY }}
-
     steps:
         #Checkout repository
         - name: Checkout code
@@ -32,7 +29,7 @@ jobs:
         #Build the project
         - name: Build the project
           env:
-              API_KEY: ${{ secrets.VITE_GOOGLE_GEMINI_API_KEY }}
+              VITE_BACKEND_URL: https://pkmn-analyzer-backend.onrender.com
           run: npm run build
 
         #Deploy to Github pages

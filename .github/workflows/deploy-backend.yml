@@ -1,0 +1,47 @@
+name: Deploy Backend to Render
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - deploy
+    paths:
+      - 'backend/**'
+      - 'render.yaml'
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: backend/package-lock.json
+
+      - name: Install backend dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Run backend tests (if any)
+        working-directory: backend
+        run: npm test --if-present
+
+      - name: Deploy to Render
+        uses: JorgeLNJunior/render-deploy@v1.4.4
+        with:
+          service_id: ${{ secrets.RENDER_SERVICE_ID }}
+          api_key: ${{ secrets.RENDER_API_KEY }}
+          wait_deploy: true
+
+      - name: Health Check
+        run: |
+          echo "Waiting for deployment to be ready..."
+          sleep 30
+          curl -f https://pkmn-analyzer-backend.onrender.com/health || exit 1

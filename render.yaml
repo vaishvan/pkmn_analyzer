@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: pkmn-analyzer-backend
+    runtime: node
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production      - key: FRONTEND_URL
+        value: https://dapre.github.io
+      - key: GOOGLE_GEMINI_API_KEY
+        sync: false # This will be set manually in Render dashboard

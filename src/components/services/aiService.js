@@ -1,56 +1,60 @@
 export const generateAIAnalysis = async (yourTeamData, opponentTeamData) => {
-    console.log('Deployment Environment:', import.meta.env.MODE);
-    console.log('API Key Present:', !!import.meta.env.VITE_GOOGLE_GEMINI_API_KEY);
-  
-    const API_ENDPOINT = 'https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent';
+    console.log('Using backend API for analysis');
+      // Determine backend URL based on environment
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 
+                       import.meta.env.PROD ? 
+                       'https://pkmn-analyzer-backend.onrender.com' : 
+                       'http://localhost:3001';
     
-    // Multiple fallback methods for API key
-    const API_KEY = 
-      import.meta.env.VITE_GOOGLE_GEMINI_API_KEY || 
-      process.env.VITE_GOOGLE_GEMINI_API_KEY || 
-      window.ENV?.VITE_GOOGLE_GEMINI_API_KEY;
-  
-    // Explicit error if no API key
-    if (!API_KEY) {
-      console.error('No API key found in any environment!');
-      throw new Error('Missing Google Gemini API Key. Please check your environment configuration.');
+    const API_ENDPOINT = `${BACKEND_URL}/api/analyze`;
+
+    try {        const response = await fetch(API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                yourTeam: yourTeamData,
+                opponentTeam: opponentTeamData
+            })
+        });
+
+        const data = await response.json();
+
+        // Extract rate limit information from headers
+        const rateLimitInfo = {
+            limit: response.headers.get('X-RateLimit-Limit'),
+            remaining: response.headers.get('X-RateLimit-Remaining'),
+            reset: response.headers.get('X-RateLimit-Reset')
+        };
+
+        if (!response.ok) {
+            // Handle rate limiting specifically
+            if (response.status === 429) {
+                const error = new Error(data.error?.message || 'Rate limit exceeded. Please try again later.');
+                error.rateLimitInfo = rateLimitInfo;
+                error.retryAfter = data.error?.retryAfter;
+                throw error;
+            }
+            
+            throw new Error(data.error?.message || 'Failed to get analysis from backend');
+        }
+
+        // Return both analysis and rate limit info
+        return {
+            analysis: data.data?.analysis || 'No analysis received',
+            rateLimitInfo,
+            cached: data.data?.cached || false
+        };
+        
+    } catch (error) {
+        console.error('Backend Analysis Error:', error);
+        
+        // Handle network errors
+        if (error.name === 'TypeError' && error.message.includes('fetch')) {
+            throw new Error('Unable to connect to analysis service. Please check your connection and try again.');
+        }
+        
+        throw new Error(error.message || 'Failed to get AI analysis');
     }
-
-  try {
-      const response = await fetch(`${API_ENDPOINT}?key=${API_KEY}`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              contents: [{
-                  role: 'user',
-                  parts: [{
-                      text: `As a Pokémon battle expert, analyze these two teams, your response should be based on previous pokemon showdown data,
-                        and should account for the best level ranges. Remove all sorts of bold stuff and italics and headings. There should only be bullet points.
-                        Your response should also include the optimal strategy on when to switch pokemon, which moves to choose based on the level ranges
-                        and previous pokemon showdown data, what the best strategy for each pokemon is, everything that a user might need should be given:
-                          My team: ${yourTeamData.map(p => p?.name || '').filter(Boolean).join(', ')}
-                          My team types: ${yourTeamData.map(p => p?.types.join('/')).filter(Boolean).join(', ')}
-                          My team abilities: ${yourTeamData.map(p => p?.abilities.join('/')).filter(Boolean).join(', ')}
-                          
-                          Opponent's team: ${opponentTeamData.map(p => p?.name || '').filter(Boolean).join(', ')}
-                          Opponent's team types: ${opponentTeamData.map(p => p?.types.join('/')).filter(Boolean).join(', ')}
-                          Opponent's team abilities: ${opponentTeamData.map(p => p?.abilities.join('/')).filter(Boolean).join(', ')}`
-                  }]
-              }]
-          })
-      });
-
-      if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API Error: ${errorData.error?.message || response.statusText}`);
-      }
-
-      const data = await response.json();
-      return data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response received';
-  } catch (error) {
-      console.error('AI Analysis Error:', error);
-      throw new Error(`Failed to get AI analysis: ${error.message}`);
-  }
 };

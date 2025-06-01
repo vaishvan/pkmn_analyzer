@@ -22,6 +22,7 @@ const PokemonAnalyzer = () => {
   const [typeAnalysis, setTypeAnalysis] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [rateLimitInfo, setRateLimitInfo] = useState(null);
 
   useEffect(() => {
     fetchPokemonList().then(setPokemonList).catch(error => setError(error.message));
@@ -56,19 +57,36 @@ const PokemonAnalyzer = () => {
     }
 
     setIsLoading(true);
-    setError('');
-
-    try {
-      const [aiAnalysis, yourTypes, opponentTypes] = await Promise.all([
+    setError('');    try {
+      const [aiResult, yourTypes, opponentTypes] = await Promise.all([
         generateAIAnalysis(teamData.yourTeam, teamData.opponentTeam),
         calculateTypeAnalysis(filledYourTeam),
         calculateTypeAnalysis(filledOpponentTeam)
       ]);
 
-      setAnalysis(aiAnalysis);
+      // Handle enhanced API response
+      if (typeof aiResult === 'object') {
+        setAnalysis(aiResult.analysis);
+        setRateLimitInfo(aiResult.rateLimitInfo);
+        
+        // Show cache indicator if response was cached
+        if (aiResult.cached) {
+          console.log('Analysis retrieved from cache');
+        }
+      } else {
+        // Fallback for simple string response
+        setAnalysis(aiResult);
+      }
+      
       setTypeAnalysis({ yourTypes, opponentTypes });
     } catch (error) {
-      setError(error.message);
+      // Handle rate limiting errors with specific UI feedback
+      if (error.rateLimitInfo) {
+        setRateLimitInfo(error.rateLimitInfo);
+        setError(`${error.message} ${error.retryAfter ? `Try again ${error.retryAfter}.` : ''}`);
+      } else {
+        setError(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -153,6 +171,28 @@ const PokemonAnalyzer = () => {
         {error && (
           <div className={styles.error}>
             {error}
+          </div>
+        )}
+
+        {rateLimitInfo && (
+          <div className={styles.rateLimitInfo}>
+            <div style={{ fontSize: '12px', opacity: 0.8, marginBottom: '4px' }}>
+              API Usage: {rateLimitInfo.limit - rateLimitInfo.remaining}/{rateLimitInfo.limit} requests used
+            </div>
+            <div style={{ 
+              width: '100%', 
+              height: '4px', 
+              backgroundColor: '#e5e7eb', 
+              borderRadius: '2px',
+              overflow: 'hidden'
+            }}>
+              <div style={{
+                width: `${((rateLimitInfo.limit - rateLimitInfo.remaining) / rateLimitInfo.limit) * 100}%`,
+                height: '100%',
+                backgroundColor: rateLimitInfo.remaining < 3 ? '#ef4444' : '#10b981',
+                transition: 'width 0.3s ease'
+              }} />
+            </div>
           </div>
         )}
 
