@@ -12,7 +12,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    base: "/pkmn_analyzer/",
+    base: "/PKMN_ANALYZER/",
     resolve: {
       alias: {
         '@': path.resolve(__dirname, './src'),
