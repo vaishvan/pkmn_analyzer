@@ -30,7 +30,7 @@ cd ..
 start "Pokemon Frontend" cmd /k "npm run dev"
 
 echo.
-echo ✅ Both services starting!
+echo Both services starting!
 echo.
 echo Backend: http://localhost:3001/health
 echo Frontend: http://localhost:5173
